@@ -24,5 +24,22 @@ var questions = [
         correctAns: 'option03',
     },
 
-
 ];
+
+
+var currentQuestion = document.getElementById('currentQuestion');
+var totalQuestions = document.getElementById('totalQuestions');
+var question = document.getElementById('question');
+var answerParent = document.getElementById('answerParent');
+var body = document.getElementsByTagName('body')
+
+var indexNum = 0;
+
+function renderQuestion(){
+
+    currentQuestion.innerHTML = indexNum + 1;
+    
+
+}
+
+renderQuestion();
