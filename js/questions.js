@@ -1,4 +1,4 @@
-var questions = [
+var Questions = [
 
     {
         question: 'Whats is the difference between xml and html ?',
@@ -38,7 +38,8 @@ var indexNum = 0;
 function renderQuestion(){
 
     currentQuestion.innerHTML = indexNum + 1;
-    
+    totalQuestions.innerHTML = Questions.length;
+
 
 }
 
