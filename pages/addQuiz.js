@@ -1,5 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
+import { getDatabase, set, ref, push } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js";
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -15,22 +17,26 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+const db = getDatabase();
 
 
-var question = document.getElementById('question');
+var question = document.getElementById('textAreaQuestion');
 var option = document.getElementById('option');
 var optionsParent = document.getElementById('optionsParent');
 var correctAnswerElem = document.getElementById('correctAnswer');
 
 var options = [];
-var correctAnswer = 0;
+var correctAnswer = 'correct answer is not defined';
 
 
 function renderOption() {
 
     optionsParent.innerHTML = ''
     for (var i = 0; i < options.length; i++) {
-        optionsParent.innerHTML += `<li ondblclick="setCorrectAnswer('${options[i]}')" class="p-2 my-1 fs-5 text-body-emphasis bg-warning-subtle">${options[i]} </li>`
+        optionsParent.innerHTML += 
+        `<li ondblclick="setCorrectAnswer('${options[i]}')" 
+        class="p-2 my-1 fs-5 text-body-emphasis bg-warning-subtle">
+        ${options[i]} </li>`
     }
 }
 
@@ -46,5 +52,24 @@ window.addOption = function () {
 
 window.setCorrectAnswer = function(a) {
     correctAnswer = a;
-    correctAnswerElem.innerText = `Correct Answer: ${correctAnswer}`;
+    correctAnswerElem.innerHTML = `Correct Answer: ${correctAnswer}`;
+}
+
+
+window.SubmitQuestion = function (){
+
+    var obj = {
+
+        question: question.value,
+        option: options,
+        correctAns: correctAnswer,
+    }
+
+    obj.id = push(ref(db, 'questions/')).key;
+
+    const reference = ref(db, `questions/${obj.id}`);
+    set(reference, obj);
+
+    
+
 }
