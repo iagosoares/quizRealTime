@@ -1,10 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
-import { getAuth} from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup} from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
 
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyDiQWU3Yo_uvcw9lfajZHTnQlQQE29jmmI",
     authDomain: "quizrealtime-278ed.firebaseapp.com",
@@ -20,16 +16,21 @@ const auth = getAuth(app);
 
 
 
-var btnSing = document.getElementById('btn-sing');
 
 
-btnSing.addEventListener(()  => {
 
-    HandleGoogleSingIn()
-});
+window.HandleGoogleSingIn = function (){
+
+    const provider = new GoogleAuthProvider();
+
+    signInWithPopup(auth, provider)
+    .then((result) => {
+        console.log(result)
+    }).catch((error) => {console.log(error)})
 
 
-function HandleGoogleSingIn(){
-    return 'deu certo';
+    
+
 }
+
 
